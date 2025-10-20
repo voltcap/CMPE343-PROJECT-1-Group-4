@@ -298,7 +298,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
 				""");
     }
 
-    static int[] pickSize(Scanner sc) {
+    static int[] pickSize(Scanner sc) 
+    {
         while (true) {
             System.out.println("Choose board size:");
             System.out.println("  1- 5 x 4");
@@ -313,7 +314,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
         }
     }
 
-    static int pickMode(Scanner sc) {
+    static int pickMode(Scanner sc)
+    {
         while (true) {
             System.out.println("Choose game mode:");
             System.out.println("  1) Single-player (vs Computer, random moves)");
@@ -325,7 +327,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
         }
     }
 
-    static int pickHumanSide(Scanner sc) {
+    static int pickHumanSide(Scanner sc) 
+    {
         while (true) {
             System.out.println("Do you want to play first or second?");
             System.out.println("  1) First (R)");
@@ -338,7 +341,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
         }
     }
 
-    static Integer parseColumn(String in, int cols) {
+    static Integer parseColumn(String in, int cols) 
+    {
         try {
             int c = Integer.parseInt(in);
             if (c < 1 || c > cols) {
@@ -402,34 +406,38 @@ static String rainbowPrefix(int x, int row, int totalRows)
     static boolean isWinningMove(int player) 
 	{
        
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < rows; r++)
+         {
+            for (int c = 0; c < cols; c++) 
+            {
                 if (grid[r][c] != player) continue;
                 // horizontal
-                if (c + 3 < cols &&
-                        grid[r][c+1] == player && grid[r][c+2] == player && grid[r][c+3] == player) return true;
+                if (c + 3 < cols && grid[r][c+1] == player && grid[r][c+2] == player && grid[r][c+3] == player) 
+                    return true;
                 // vertical
-                if (r + 3 < rows &&
-                        grid[r+1][c] == player && grid[r+2][c] == player && grid[r+3][c] == player) return true;
+                if (r + 3 < rows && grid[r+1][c] == player && grid[r+2][c] == player && grid[r+3][c] == player) 
+                    return true;
                 // diagonal bottom
-                if (r + 3 < rows && c + 3 < cols &&
-                        grid[r+1][c+1] == player && grid[r+2][c+2] == player && grid[r+3][c+3] == player) return true;
+                if (r + 3 < rows && c + 3 < cols && grid[r+1][c+1] == player && grid[r+2][c+2] == player && grid[r+3][c+3] == player) 
+                    return true;
                 // diagonal top
-                if (r - 3 >= 0 && c + 3 < cols &&
-                        grid[r-1][c+1] == player && grid[r-2][c+2] == player && grid[r-3][c+3] == player) return true;
+                if (r - 3 >= 0 && c + 3 < cols && grid[r-1][c+1] == player && grid[r-2][c+2] == player && grid[r-3][c+3] == player) 
+                    return true;
             }
         }
         return false;
     }
 
     //rendering the pieces
-    static String pieceChar(int v) {
+    static String pieceChar(int v)
+     {
         if (v == P1) return RED_FG + "R" + RESET;    
         if (v == P2) return YELLOW_FG + "Y" + RESET; 
         return GRAY_FG + "·" + RESET;               
     }
 
-    static String render() {
+    static String render() 
+    {
         StringBuilder sb = new StringBuilder();
 
         // TOP LINE
@@ -463,6 +471,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
 
         // BOTTOM LINE
         sb.append("   ").append("└");
+
         for (int c = 0; c < cols; c++) {
             sb.append("───");
             sb.append(c == cols - 1 ? "┘" : "┴");
@@ -471,7 +480,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
 
         //BLUE COLUMN NUMBERS 
         sb.append("    ");
-        for (int c = 1; c <= cols; c++) {
+        for (int c = 1; c <= cols; c++)
+        {
             sb.append(BLUE_FG).append(String.format(" %2d ", c)).append(RESET);
         }
         sb.append("\n");
