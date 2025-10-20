@@ -19,7 +19,6 @@ class main_menu
 	
 	public static void callMenu()
 	{
-		//dont forget to display the ASCII art later
 
 		while(true)
 		{
@@ -152,6 +151,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
 
 
 //-------------------------------------------------- CONNECT FOUR ---------------------------------------------------
+//i will add AI later
 
 		//game constants
 		static final int EMPTY = 0;
@@ -461,7 +461,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
             }
         }
 
-        // ALT KENAR
+        // BOTTOM LINE
         sb.append("   ").append("└");
         for (int c = 0; c < cols; c++) {
             sb.append("───");
@@ -469,7 +469,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
         }
         sb.append("\n");
 
-        // KOLON NUMARALARI (mavi)
+        //BLUE NUMBERS 
         sb.append("    ");
         for (int c = 1; c <= cols; c++) {
             sb.append(BLUE_FG).append(String.format(" %2d ", c)).append(RESET);
