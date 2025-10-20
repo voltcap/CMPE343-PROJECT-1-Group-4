@@ -461,7 +461,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
             }
         }
 
-        // ALT KENAR
+        // BOTTOM LINE
         sb.append("   ").append("└");
         for (int c = 0; c < cols; c++) {
             sb.append("───");
@@ -469,7 +469,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
         }
         sb.append("\n");
 
-        // KOLON NUMARALARI (mavi)
+        // blue numbers
         sb.append("    ");
         for (int c = 1; c <= cols; c++) {
             sb.append(BLUE_FG).append(String.format(" %2d ", c)).append(RESET);
