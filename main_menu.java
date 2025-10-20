@@ -469,7 +469,11 @@ static String rainbowPrefix(int x, int row, int totalRows)
         }
         sb.append("\n");
 
+<<<<<<< HEAD
         //BLUE NUMBERS 
+=======
+        // blue numbers
+>>>>>>> 8b3fed505aeb5ddec98a712405ec0ec2564b775c
         sb.append("    ");
         for (int c = 1; c <= cols; c++) {
             sb.append(BLUE_FG).append(String.format(" %2d ", c)).append(RESET);
