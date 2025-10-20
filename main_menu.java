@@ -356,17 +356,35 @@ static String rainbowPrefix(int x, int row, int totalRows)
         }
     }
 
-    static void pause(Scanner sc) {
+    static void pause(Scanner sc)
+    {
         System.out.print("Press Enter to continue...");
         sc.nextLine();
     }
 
-    static void sleep(long ms) {
-        try { Thread.sleep(ms); } catch (InterruptedException ignored) {}
+    static void sleep(long ms)
+    {
+        try { 
+            Thread.sleep(ms);
+         } 
+         catch (InterruptedException ignored) {}
     }
 
-    static int opponent(int p) { return (p == P1) ? P2 : P1; }
-    static String token(int p) { return (p == P1) ? "R" : "Y"; }
+    static int opponent(int p) //returns opponent as P2 if the player is P1
+    {
+    if (p == P1)
+        return P2;
+    else
+        return P1;
+    } 
+    
+    static String token(int p) //p1 is red p2 is yellow
+    {
+    if (p == P1)
+        return "R";
+    else
+        return "Y";
+    }
 
     //declaring the grid/board
     static void initBoard(int r, int c) 
