@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.*; //for scanner,lists, random
 
-class main_menu
+public class main_menu
 {
 
 	public static void main(String[] args)
