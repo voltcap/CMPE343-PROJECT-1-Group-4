@@ -107,7 +107,7 @@ static void playNyanCat()
         clearConsole();                  
         for (int r = 0; r < raw.length; r++)
 		{
-			 String indent = rainbowPrefix(x, r, raw.length); // <--- eskiden " ".repeat(x) idi
+			 String indent = rainbowPrefix(x, r, raw.length); 
         	System.out.println(indent + raw[r]);
 		}        
         try { Thread.sleep(80); } catch (InterruptedException ignored) {}
@@ -119,7 +119,7 @@ static void playNyanCat()
 //for the rainbow trail behind the cat
 static String rainbowPrefix(int x, int row, int totalRows)
 {
-	//ANSI codes for coloring the terminal
+	//* ANSI codes for the rainbow trail behind the kitty */
     final String RESET   = "\033[0m";
     final String RED     = "\033[38;5;196m";
     final String ORANGE  = "\033[38;5;208m";
@@ -163,8 +163,10 @@ static String rainbowPrefix(int x, int row, int totalRows)
 		static int[][] grid;   // [row][col]
 		static int[] heights;  // amount of pieces in each column
 
-		//color codes
+		
 		static final String RESET  = "\u001B[0m";
+
+        /** ANSI escape codes for foreground colors. */
 		static final String RED_FG    = "\u001B[38;5;196m";
 		static final String YELLOW_FG = "\u001B[38;5;226m";
 		static final String BLUE_FG   = "\u001B[38;5;45m";
@@ -205,7 +207,10 @@ static String rainbowPrefix(int x, int row, int totalRows)
 					{
 						System.out.printf("Player %s (You), choose a column 1-%d or 'q' to forfeit: ", token(current), cols);
 						String in = sc.nextLine().trim();
-						if (in.equalsIgnoreCase("q")) {
+
+                        //*Returns true if the strings are equal */
+						if (in.equalsIgnoreCase("q")) 
+                        {
 							forfeitWinner = opponent(current);
 							break;
 						}
@@ -417,7 +422,9 @@ static String rainbowPrefix(int x, int row, int totalRows)
     static List<Integer> getValidMoves()
 	{
         List<Integer> moves = new ArrayList<>();
-        for (int c = 0; c < cols; c++) if (isValidMove(c)) moves.add(c);
+        for (int c = 0; c < cols; c++)
+            if (isValidMove(c)) 
+                moves.add(c);
         return moves;
     }
 
