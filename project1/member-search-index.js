@@ -1,1 +1,0 @@
-memberSearchIndex = [{"p":"<Unnamed>","c":"main_menu","l":"callMenu()","k":"6"},{"p":"<Unnamed>","c":"main_menu","l":"clearConsole()","k":"6"},{"p":"<Unnamed>","c":"main_menu","l":"main_menu()","u":"%3Cinit%3E()","k":"3"},{"p":"<Unnamed>","c":"main_menu","l":"main(String[])","u":"main(java.lang.String[])","k":"6"}];updateSearchResults();
