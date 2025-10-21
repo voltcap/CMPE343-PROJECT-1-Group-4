@@ -252,7 +252,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
 					if (mode == 1 && current != humanPlayer) {
 						System.out.printf("Computer (%s) wins!\n", token(current));
 					} else if (mode == 1 && current == humanPlayer) {
-						System.out.println("You win! 🎉");
+						System.out.println("You win!");
 					} else {
 						System.out.printf("Player %s wins!\n", token(current));
 					}
@@ -476,7 +476,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
             }
             sb.append("\n");
 
-            // SATIR AYRAÇLARI
+            
             if (r != rows - 1) {
                 sb.append("   ").append("├");
                 for (int c = 0; c < cols; c++) {
