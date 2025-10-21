@@ -17,12 +17,17 @@ public class main_menu
    	 		System.out.flush();
 	}
 	
+    static boolean animationFlag = false; // so the animation plays only once
 	public static void callMenu()
 	{
 
 		while(true)
 		{
-			playNyanCat();
+            if(!animationFlag)
+			{
+                playNyanCat();
+                animationFlag = true;
+            }
 
 
 			System.out.println("\nPlease select one of the options below: \n[A] Primary School");
@@ -35,6 +40,13 @@ public class main_menu
 			System.out.printf("Select one of the options above:");
 			String str = input.nextLine();
 			System.out.printf("%s", str);
+
+              if (str.isEmpty())
+            {
+                System.err.println("\nInvalid input. Try again!!!!!!!");
+                input.nextLine();
+                continue;
+            }
 
 			if (str.equals("A"))
 			{
@@ -64,9 +76,13 @@ public class main_menu
 			}
 			else
 				System.err.println("\nInvalid input. Try again!!!!!!!");
+
+            
 			
 			
 		}	
+
+        
 	}
 
 
@@ -421,7 +437,9 @@ static String rainbowPrefix(int x, int row, int totalRows)
 
     static boolean isFull() 
 	{
-        for (int c = 0; c < cols; c++) if (heights[c] < rows) return false;
+        for (int c = 0; c < cols; c++) 
+            if (heights[c] < rows)
+                 return false;
         return true;
     }
 
