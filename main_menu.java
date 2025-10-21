@@ -223,7 +223,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
 						}
 						makeMove(col, current);
 					} 
-					else {
+					else 
+                    {
 						System.out.printf("Computer (%s) is thinking...\n", token(current));
 						List<Integer> moves = getValidMoves();
 						int move = moves.get(rng.nextInt(moves.size()));
@@ -250,7 +251,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
 					makeMove(col, current);
 				}
 
-				if (isWinningMove(current)) {
+				if (isWinningMove(current)) 
+                {
 					clearConsole();
 					printTitle();
 					System.out.println(render());
@@ -262,13 +264,17 @@ static String rainbowPrefix(int x, int row, int totalRows)
 						System.out.printf("Player %s wins!\n", token(current));
 					}
 					gameOver = true;
-				} else if (isFull()) {
+				} 
+                else if (isFull()) 
+                {
 					clearConsole();
 					printTitle();
 					System.out.println(render());
 					System.out.println("It's a draw.");
 					gameOver = true;
-				} else {
+				} 
+                else 
+                {
 					current = opponent(current);
 				}
 			}
