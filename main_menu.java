@@ -212,7 +212,8 @@ static String rainbowPrefix(int x, int row, int totalRows)
 			Integer forfeitWinner = null;
 			Random rng = new Random();
 
-			while (!gameOver) {
+			while (!gameOver) 
+            {
 				clearConsole();
 				printTitle();
 				System.out.println(render());
@@ -272,11 +273,16 @@ static String rainbowPrefix(int x, int row, int totalRows)
 					clearConsole();
 					printTitle();
 					System.out.println(render());
-					if (mode == 1 && current != humanPlayer) {
+					if (mode == 1 && current != humanPlayer) 
+                    {
 						System.out.printf("Computer (%s) wins!\n", token(current));
-					} else if (mode == 1 && current == humanPlayer) {
+					} 
+                    else if (mode == 1 && current == humanPlayer) 
+                    {
 						System.out.println("You win!");
-					} else {
+					}
+                    else
+                    {
 						System.out.printf("Player %s wins!\n", token(current));
 					}
 					gameOver = true;
@@ -295,20 +301,53 @@ static String rainbowPrefix(int x, int row, int totalRows)
 				}
 			}
 
-			if (forfeitWinner != null) {
+			if (forfeitWinner != null)
+            {
 				clearConsole();
 				printTitle();
 				System.out.println(render());
-				if (mode == 1 && forfeitWinner != humanPlayer) {
+				if (mode == 1 && forfeitWinner != humanPlayer) 
+                {
 					System.out.printf("You forfeited. Computer (%s) wins.\n", token(forfeitWinner));
-				} else if (mode == 1 && forfeitWinner == humanPlayer) {
+				} 
+                else if (mode == 1 && forfeitWinner == humanPlayer)
+                {
 					System.out.println("Computer forfeited. You win!");
-				} else {
+				} 
+                else 
+                {
 					System.out.printf("Player %s wins by forfeit.\n", token(forfeitWinner));
 				}
 			}
 
-        System.out.println("\nThanks for playing!");
+        //*After the game ends, we ask the user if they want to return or play again. */
+        while(true)
+        {
+            System.out.println("\nThanks for playing! \n Would you like to play again or return to the main menu?");
+            System.out.println("1) Play again! ");
+            System.out.println("2) Return to Main Menu.");
+
+            Scanner input = new Scanner(System.in);
+            String ans = input.nextLine().trim();
+
+            if (ans.equals("1"))
+            {
+                clearConsole();
+                connectFour();
+                break;
+            }
+            else if (ans.equals("2"))
+            {
+                clearConsole();
+                callMenu();
+                break;
+
+            }
+            else
+            {
+                System.err.println("Invalid input. Please try again.");
+            }
+        }
     }
 
 
@@ -329,9 +368,9 @@ static String rainbowPrefix(int x, int row, int totalRows)
     {
         while (true) {
             System.out.println("Choose board size:");
-            System.out.println("  1- 5 x 4");
-            System.out.println("  2- 6 x 5");
-            System.out.println("  3- 7 x 6");
+            System.out.println("  1) 5 x 4");
+            System.out.println("  2) 6 x 5");
+            System.out.println("  3) 7 x 6");
             System.out.print("Enter 1-3: ");
             String in = sc.nextLine().trim();
             if (in.equals("1")) return new int[]{5, 4};
@@ -343,13 +382,15 @@ static String rainbowPrefix(int x, int row, int totalRows)
 
     static int pickMode(Scanner sc)
     {
-        while (true) {
+        while (true)
+         {
             System.out.println("Choose game mode:");
             System.out.println("  1) Single-player (vs Computer, random moves)");
             System.out.println("  2) Two players (local)");
             System.out.print("Enter 1 or 2: ");
             String in = sc.nextLine().trim();
-            if (in.equals("1") || in.equals("2")) return Integer.parseInt(in);
+            if (in.equals("1") || in.equals("2"))
+                return Integer.parseInt(in);
             System.out.println("Invalid choice. Try again.\n");
         }
     }
