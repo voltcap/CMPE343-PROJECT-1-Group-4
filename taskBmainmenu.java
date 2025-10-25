@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.*; //for scanner,lists, random
+import java.util.regex.Pattern;
 
 public class main_menu
 {
@@ -164,8 +165,7 @@ static String rainbowPrefix(int x, int row, int totalRows)
     }
 }
 
-// task b secondary school
-
+// @@@@@@@@ secondary school task b
 static void secschoolMenu() {
     Scanner sc = new Scanner(System.in);
     while (true) {
@@ -186,32 +186,43 @@ static void secschoolMenu() {
     }
 }
 
-// prime nums
 static void primeNums() {
     Scanner sc = new Scanner(System.in);
     int n;
+    final int MAX = 20_000_000;
+
     while (true) {
-        System.out.print("Enter an integer greater than 12: ");
+        System.out.printf("Enter an integer greater than 12 (max %d): ", MAX);
         try {
             n = Integer.parseInt(sc.nextLine().trim());
-            if (n >= 12) break;
+            if (n >= 12 && n <= MAX) break;
         } catch (Exception ignored) {}
-        System.err.println("That's wrong, please try again");
+        System.err.println("wrong, try again");
     }
 
     long t1 = System.currentTimeMillis();
     List<Integer> e = sieveEratosthenes(n);
     long t2 = System.currentTimeMillis();
-    List<Integer> s = sieveSundaram(n);
+
+    List<Integer> s = new ArrayList<>();
+    boolean sundaramSafe = n <= 1_000_000; 
+    if (sundaramSafe) {
+        long tS = System.currentTimeMillis();
+        s = sieveSundaram(n);
+        long tS2 = System.currentTimeMillis();
+        System.out.println("\nSundaram Algorithm (" + (tS2 - tS) + " ms)");
+        printPrimeSample(s);
+    } else {
+        System.out.println("\nSundaram Algorithm skipped");
+    }
+
     long t3 = System.currentTimeMillis();
     List<Integer> a = sieveAtkin(n);
     long t4 = System.currentTimeMillis();
 
-    System.out.println("\n Eratosthenes Algorithm (" + (t2 - t1) + " ms)");
+    System.out.println("\nEratosthenes Algorithm (" + (t2 - t1) + " ms)");
     printPrimeSample(e);
-    System.out.println("\n Sundaram Algorithm (" + (t3 - t2) + " ms)");
-    printPrimeSample(s);
-    System.out.println("\n Atkin Algorithm (" + (t4 - t3) + " ms)");
+    System.out.println("\nAtkin Algorithm (" + (t4 - t3) + " ms)");
     printPrimeSample(a);
 
     System.out.print("\nPress enter to go back");
@@ -243,8 +254,9 @@ static List<Integer> sieveSundaram(int n) {
     int m = (n - 1) / 2;
     boolean[] marked = new boolean[m + 1];
     for (int i = 1; i <= m; i++)
-        for (int j = i; (i + j + 2 * i * j) <= m; j++)
-            marked[i + j + 2 * i * j] = true;
+        for (int j = i; (long)i + j + 2L*i*j <= m; j++)
+            marked[(int)((long)i + j + 2L*i*j)] = true;
+
     List<Integer> list = new ArrayList<>();
     if (n > 2) list.add(2);
     for (int i = 1; i <= m; i++)
@@ -258,20 +270,18 @@ static List<Integer> sieveAtkin(int n) {
     for (int x = 1; x <= sqrt; x++) {
         for (int y = 1; y <= sqrt; y++) {
             int num = 4*x*x + y*y;
-            if (num <= n && (num % 12 == 1 || num % 12 == 5))
-                sieve[num] ^= true;
+            if (num <= n && (num % 12 == 1 || num % 12 == 5)) sieve[num] ^= true;
             num = 3*x*x + y*y;
-            if (num <= n && num % 12 == 7)
-                sieve[num] ^= true;
+            if (num <= n && num % 12 == 7) sieve[num] ^= true;
             num = 3*x*x - y*y;
-            if (x > y && num <= n && num % 12 == 11)
-                sieve[num] ^= true;
+            if (x > y && num <= n && num % 12 == 11) sieve[num] ^= true;
         }
     }
     for (int i = 5; i <= sqrt; i++)
         if (sieve[i])
             for (int j = i*i; j <= n; j += i*i)
                 sieve[j] = false;
+
     List<Integer> list = new ArrayList<>();
     if (n > 2) list.add(2);
     if (n > 3) list.add(3);
@@ -279,7 +289,6 @@ static List<Integer> sieveAtkin(int n) {
     return list;
 }
 
-// expression eval
 static void expressionEv() {
     Scanner sc = new Scanner(System.in);
     while (true) {
@@ -288,11 +297,12 @@ static void expressionEv() {
         if (expr.equalsIgnoreCase("q")) return;
 
         if (!isValidExpression(expr)) {
-            System.err.println("Wrong expression, make sure you're using the correct operations.\n");
+            System.err.println("Wrong expression, try again\n");
             continue;
         }
+
         expr = expr.replace('x', '*').replace(':', '/');
-        System.out.println("Step-by-step evaluation:");
+        System.out.println("full evaluation:");
         recursiveEval(expr);
         System.out.print("\nPress enter to go back");
         sc.nextLine();
@@ -301,7 +311,7 @@ static void expressionEv() {
 }
 
 static boolean isValidExpression(String s) {
-    if (!s.matches("[0-9+\\-x:\\(\\)\\s]+")) return false;
+    if (!Pattern.matches("[0-9+\\-x:\\(\\)\\s]+", s)) return false;
     int bal = 0;
     for (char c : s.toCharArray()) {
         if (c == '(') bal++;
@@ -312,39 +322,29 @@ static boolean isValidExpression(String s) {
 }
 
 static void recursiveEval(String expr) {
-    expr = expr.replaceAll("\\s+", "")
-               .replace('x', '*')
-               .replace(':', '/');
+    expr = expr.replaceAll("\\s+", "");
     try {
         while (expr.contains("(")) {
             int close = expr.indexOf(')');
             int open = expr.lastIndexOf('(', close);
-            String inner = expr.substring(open + 1, close);
-            double val = evaluateFlat(inner);
-            String before = expr;
+            double val = evaluateFlat(expr.substring(open + 1, close));
             expr = expr.substring(0, open) + val + expr.substring(close + 1);
-            System.out.println(before + "  →  " + expr);
+            System.out.println(expr);
         }
         double result = evaluateFlat(expr);
         System.out.println("= " + result);
     } catch (Exception e) {
-        System.err.println("Something's wrong: " + e.getMessage());
+        System.err.println("Evaluation error: " + e.getMessage());
     }
 }
-
 
 static double evaluateFlat(String expr) {
     List<String> tokens = new ArrayList<>();
     StringBuilder num = new StringBuilder();
     for (int i = 0; i < expr.length(); i++) {
         char c = expr.charAt(i);
-        if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || "+-*/".indexOf(expr.charAt(i-1)) != -1))) {
-            num.append(c);
-        } else if ("+-*/".indexOf(c) != -1) {
-            tokens.add(num.toString());
-            tokens.add(String.valueOf(c));
-            num.setLength(0);
-        }
+        if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || "+-*/".indexOf(expr.charAt(i-1)) != -1))) num.append(c);
+        else if ("+-*/".indexOf(c) != -1) { tokens.add(num.toString()); tokens.add(String.valueOf(c)); num.setLength(0); }
     }
     tokens.add(num.toString());
 
@@ -353,8 +353,7 @@ static double evaluateFlat(String expr) {
             double left = Double.parseDouble(tokens.get(i-1));
             double right = Double.parseDouble(tokens.get(i+1));
             double val = tokens.get(i).equals("*") ? left * right : left / right;
-            tokens.set(i-1, Double.toString(val));
-            tokens.remove(i); tokens.remove(i); i--;
+            tokens.set(i-1, Double.toString(val)); tokens.remove(i); tokens.remove(i); i--;
         }
     }
 
